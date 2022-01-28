@@ -8,6 +8,8 @@ import com.example.DTO.model.User;
 import com.example.DTO.repo.UserRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +23,14 @@ public class UserService {
                 .stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
+    }
+
+    public ResponseEntity<Object> getUserLocation(String id) {
+        User user = userRepo.findById(id).orElse(new User());
+        if (user.getName() == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(convertEntityToDto(user));
     }
 
     private UserLocationDTO convertEntityToDto(User user) {
