@@ -7,6 +7,7 @@ import com.example.DTO.dto.UserLocationDTO;
 import com.example.DTO.model.User;
 import com.example.DTO.repo.UserRepo;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<UserLocationDTO> getAllUsersLocation() {
         return userRepo.findAll()
@@ -34,7 +38,12 @@ public class UserService {
     }
 
     private UserLocationDTO convertEntityToDto(User user) {
-        return new UserLocationDTO(user.getId(), user.getEmail(), user.getLocation().getPlace(),
-                user.getLocation().getLatitude(), user.getLocation().getLongitude());
+        return modelMapper.map(user, UserLocationDTO.class);
     }
+
+    // private UserLocationDTO convertEntityToDto(User user) {
+    // return new UserLocationDTO(user.getId(), user.getEmail(),
+    // user.getLocation().getPlace(),
+    // user.getLocation().getLatitude(), user.getLocation().getLongitude());
+    // }
 }
