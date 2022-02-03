@@ -2,14 +2,11 @@ package com.example.DTO.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.example.DTO.dto.UserLocationDTO;
 import com.example.DTO.model.User;
 import com.example.DTO.repo.UserRepo;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
