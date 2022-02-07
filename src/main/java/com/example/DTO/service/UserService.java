@@ -22,7 +22,9 @@ public class UserService {
     private ModelMapper modelMapper;
 
     public List<UserLocationDTO> getAllUsersLocation() {
-        return userRepo.findAll().stream().map(user -> modelMapper.map(user, UserLocationDTO.class))
+        return userRepo.findAll()
+                .stream()
+                .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 
