@@ -16,12 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users-location")
+    @GetMapping(path = "/users-location", produces = { "application/json", "application/xml" })
     public List<UserLocationDTO> getAllUsersLocation() {
         return userService.getAllUsersLocation();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping(path = "/user/{id}", produces = { "application/json", "application/xml" })
     public ResponseEntity<Object> getUserLocation(@PathVariable String id) {
         return userService.getUserLocation(id);
     }
