@@ -27,22 +27,27 @@ public class UserServiceTest {
     @Test
     public void getAllUsersLocationTest() {
         when(userController.getAllUsersLocation()).thenReturn(
-                Stream.of(new UserLocationDTO("1", "sagar@logic.com", "Bangalore", 12.9, 77.5),
+                Stream.of(new UserLocationDTO("1", "sagar@logic.com", "Bangalore", 12.9,
+                        77.5),
                         new UserLocationDTO("2", "random@logic.com", "Chennai", 13.9, 80.5))
                         .collect(Collectors.toList()));
 
         assertEquals(2, userController.getAllUsersLocation().size());
         assertEquals("1", userController.getAllUsersLocation().get(0).getId());
-        assertEquals("Chennai", userController.getAllUsersLocation().get(1).getPlace());
-        assertEquals(13.9, userController.getAllUsersLocation().get(1).getLatitude(), 0.0);
-        assertEquals(77.5, userController.getAllUsersLocation().get(0).getLongitude(), 0.0);
+        assertEquals("Chennai",
+                userController.getAllUsersLocation().get(1).getPlace());
+        assertEquals(13.9, userController.getAllUsersLocation().get(1).getLatitude(),
+                0.0);
+        assertEquals(77.5,
+                userController.getAllUsersLocation().get(0).getLongitude(), 0.0);
     }
 
     @Test
     public void getUserLocationTest() {
         String id = "1";
         when(userController.getUserLocation(id))
-                .thenReturn(ResponseEntity.ok(new UserLocationDTO(id, "sagar@logic.com", "surat", 23.33, 34.56)));
+                .thenReturn(ResponseEntity.ok(new UserLocationDTO(id, "sagar@logic.com",
+                        "surat", 23.33, 34.56)));
 
         assertEquals(id, ((UserLocationDTO) userController.getUserLocation(id).getBody()).getId());
         assertEquals(200, userController.getUserLocation(id).getStatusCodeValue());
@@ -51,4 +56,12 @@ public class UserServiceTest {
         assertEquals(34.56, ((UserLocationDTO) userController.getUserLocation(id).getBody()).getLongitude(), 0.0);
     }
 
+    @Test
+    public void deleteUserTest() {
+        String id = "1";
+        when(userController.deleteUser(id)).thenReturn(ResponseEntity.ok("User deleted"));
+
+        assertEquals("User deleted", userController.deleteUser(id).getBody());
+        assertEquals(200, userController.deleteUser(id).getStatusCodeValue());
+    }
 }

@@ -7,6 +7,7 @@ import com.example.DTO.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +25,10 @@ public class UserController {
     @GetMapping(path = "/user/{id}", produces = { "application/json", "application/xml" })
     public ResponseEntity<Object> getUserLocation(@PathVariable String id) {
         return userService.getUserLocation(id);
+    }
+
+    @DeleteMapping(path = "/user/{id}", produces = { "application/json", "application/xml" })
+    public ResponseEntity<Object> deleteUser(@PathVariable String id) {
+        return userService.deleteUser(id);
     }
 }

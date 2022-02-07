@@ -34,6 +34,15 @@ public class UserService {
         return ResponseEntity.ok(convertEntityToDto(user));
     }
 
+    public ResponseEntity<Object> deleteUser(String id) {
+        User user = userRepo.findById(id).orElse(new User());
+        if (user.getName() == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        userRepo.delete(user);
+        return ResponseEntity.ok("User deleted");
+    }
+
     private UserLocationDTO convertEntityToDto(User user) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(user, UserLocationDTO.class);
