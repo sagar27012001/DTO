@@ -34,6 +34,8 @@ public class UserServiceTest {
         assertEquals(2, userController.getAllUsersLocation().size());
         assertEquals("1", userController.getAllUsersLocation().get(0).getId());
         assertEquals("Chennai", userController.getAllUsersLocation().get(1).getPlace());
+        assertEquals(13.9, userController.getAllUsersLocation().get(1).getLatitude(), 0.0);
+        assertEquals(77.5, userController.getAllUsersLocation().get(0).getLongitude(), 0.0);
     }
 
     @Test
@@ -45,6 +47,8 @@ public class UserServiceTest {
         assertEquals(id, ((UserLocationDTO) userController.getUserLocation(id).getBody()).getId());
         assertEquals(200, userController.getUserLocation(id).getStatusCodeValue());
         assertEquals("surat", ((UserLocationDTO) userController.getUserLocation(id).getBody()).getPlace());
+        assertEquals(23.33, ((UserLocationDTO) userController.getUserLocation(id).getBody()).getLatitude(), 0.0);
+        assertEquals(34.56, ((UserLocationDTO) userController.getUserLocation(id).getBody()).getLongitude(), 0.0);
     }
 
 }
