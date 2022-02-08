@@ -2,6 +2,7 @@ package com.example.DTO.controller;
 
 import java.util.List;
 
+import com.example.DTO.dto.CustomDTO;
 import com.example.DTO.dto.UserLocationDTO;
 import com.example.DTO.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,4 +34,8 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
+    @PostMapping(path = "/user")
+    public ResponseEntity<Object> addUser(@RequestBody CustomDTO customDTO) {
+        return userService.addUser(customDTO);
+    }
 }

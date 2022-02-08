@@ -2,8 +2,12 @@ package com.example.DTO.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.example.DTO.dto.CustomDTO;
 import com.example.DTO.dto.UserLocationDTO;
+import com.example.DTO.model.Location;
 import com.example.DTO.model.User;
+import com.example.DTO.repo.LocationRepo;
 import com.example.DTO.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -20,6 +24,9 @@ public class UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private LocationRepo locationRepo;
 
     public List<UserLocationDTO> getAllUsersLocation() {
         return userRepo.findAll()
@@ -43,6 +50,27 @@ public class UserService {
         }
         userRepo.delete(user);
         return ResponseEntity.ok("User deleted");
+    }
+
+    public ResponseEntity<Object> addUser(CustomDTO customDTO) {
+        User user = new User();
+        Location location = new Location();
+        location.setPlace(customDTO.getPlace());
+        location.setDescription(customDTO.getDescription());
+        location.setLatitude(customDTO.getLatitude());
+        location.setLongitude(customDTO.getLongitude());
+        locationRepo.save(location);
+        Location location1 = locationRepo.findByPlace(customDTO.getPlace());
+        user.setName(customDTO.getName());
+        user.setEmail(customDTO.getEmail());
+        user.setPassword(customDTO.getPassword());
+        user.setLocation(location1);
+        if (userRepo.findByEmail(customDTO.getEmail()) != null) {
+            return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
+        } else {
+            userRepo.save(user);
+            return ResponseEntity.ok(user);
+        }
     }
 
     private UserLocationDTO convertEntityToDto(User user) {
