@@ -2,7 +2,6 @@ package com.example.DTO.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.example.DTO.dto.CustomDTO;
 import com.example.DTO.dto.UserLocationDTO;
 import com.example.DTO.model.Location;
@@ -71,6 +70,18 @@ public class UserService {
             userRepo.save(user);
             return ResponseEntity.ok(user);
         }
+    }
+
+    public ResponseEntity<Object> updateUser(String email, CustomDTO customDTO) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        user.setName(customDTO.getName());
+        user.setEmail(customDTO.getEmail());
+        user.setPassword(customDTO.getPassword());
+        userRepo.save(user);
+        return ResponseEntity.ok(user);
     }
 
     private UserLocationDTO convertEntityToDto(User user) {

@@ -20,4 +20,8 @@ public class User {
     @DBRef
     private Location location;
 
+    public User orElse(User user) {
+        return null;
+    }
+
 }
