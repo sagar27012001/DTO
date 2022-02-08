@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.example.DTO.controller.UserController;
+import com.example.DTO.dto.CustomDTO;
 import com.example.DTO.dto.UserLocationDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,5 +64,31 @@ public class UserServiceTest {
 
         assertEquals("User deleted", userController.deleteUser(id).getBody());
         assertEquals(200, userController.deleteUser(id).getStatusCodeValue());
+    }
+
+    @Test
+    public void addUserTest() {
+        CustomDTO customDTO = new CustomDTO("new user", "new@user.com", "123", "place", "desc", 23.33, 33.33);
+        when(userController.addUser(customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+        assertEquals(customDTO, userController.addUser(customDTO).getBody());
+        assertEquals(200, userController.addUser(customDTO).getStatusCodeValue());
+    }
+
+    @Test
+    public void updateUserTest() {
+        String email = "new@email.com";
+        CustomDTO customDTO = new CustomDTO("new user", "modified email", "modified pass", null, null, 0.0, 0.0);
+        when(userController.updateUser(email, customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+        assertEquals(customDTO, userController.updateUser(email, customDTO).getBody());
+        assertEquals(200, userController.updateUser(email, customDTO).getStatusCodeValue());
+    }
+
+    @Test
+    public void updateLocationTest() {
+        String place = "new place";
+        CustomDTO customDTO = new CustomDTO(null, null, null, "new place", "new desc", 23.33, 33.33);
+        when(userController.updateLocation(place, customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+        assertEquals(customDTO, userController.updateLocation(place, customDTO).getBody());
+        assertEquals(200, userController.updateLocation(place, customDTO).getStatusCodeValue());
     }
 }
