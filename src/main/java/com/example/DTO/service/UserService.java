@@ -84,6 +84,19 @@ public class UserService {
         return ResponseEntity.ok(user);
     }
 
+    public ResponseEntity<Object> updateLocation(String place, CustomDTO customDTO) {
+        Location location = locationRepo.findByPlace(place);
+        if (location == null) {
+            return new ResponseEntity<>("Location not found", HttpStatus.NOT_FOUND);
+        }
+        location.setPlace(customDTO.getPlace());
+        location.setDescription(customDTO.getDescription());
+        location.setLatitude(customDTO.getLatitude());
+        location.setLongitude(customDTO.getLongitude());
+        locationRepo.save(location);
+        return ResponseEntity.ok(location);
+    }
+
     private UserLocationDTO convertEntityToDto(User user) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(user, UserLocationDTO.class);

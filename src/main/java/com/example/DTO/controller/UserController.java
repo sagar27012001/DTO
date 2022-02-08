@@ -44,4 +44,10 @@ public class UserController {
     public ResponseEntity<Object> updateUser(@PathVariable String email, @RequestBody CustomDTO customDTO) {
         return userService.updateUser(email, customDTO);
     }
+
+    @PutMapping(path = "/location/{place}")
+    public ResponseEntity<Object> updateLocation(@PathVariable String place, @RequestBody CustomDTO customDTO) {
+        return userService.updateLocation(place, customDTO);
+    }
+
 }
