@@ -70,6 +70,7 @@ public class UserServiceTest {
     public void addUserTest() {
         CustomDTO customDTO = new CustomDTO("new user", "new@user.com", "123", "place", "desc", 23.33, 33.33);
         when(userController.addUser(customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+
         assertEquals(customDTO, userController.addUser(customDTO).getBody());
         assertEquals(200, userController.addUser(customDTO).getStatusCodeValue());
     }
@@ -79,6 +80,7 @@ public class UserServiceTest {
         String email = "new@email.com";
         CustomDTO customDTO = new CustomDTO("new user", "modified email", "modified pass", null, null, 0.0, 0.0);
         when(userController.updateUser(email, customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+
         assertEquals(customDTO, userController.updateUser(email, customDTO).getBody());
         assertEquals(200, userController.updateUser(email, customDTO).getStatusCodeValue());
     }
@@ -88,6 +90,7 @@ public class UserServiceTest {
         String place = "new place";
         CustomDTO customDTO = new CustomDTO(null, null, null, "new place", "new desc", 23.33, 33.33);
         when(userController.updateLocation(place, customDTO)).thenReturn(ResponseEntity.ok(customDTO));
+
         assertEquals(customDTO, userController.updateLocation(place, customDTO).getBody());
         assertEquals(200, userController.updateLocation(place, customDTO).getStatusCodeValue());
     }
