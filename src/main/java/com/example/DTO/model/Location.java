@@ -16,5 +16,5 @@ public class Location {
     private String place;
     private String description;
     private double longitude;
-    private double latitude;
+    private double latitude;    
 }
