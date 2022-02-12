@@ -42,13 +42,13 @@ public class UserService {
         return ResponseEntity.ok(convertEntityToDto(user));
     }
 
-    public ResponseEntity<Object> deleteUser(String id) {
+    public String deleteUser(String id) {
         User user = userRepo.findById(id).orElse(new User());
         if (user.getName() == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            return "User not found";
         }
         userRepo.delete(user);
-        return ResponseEntity.ok("User deleted");
+        return "User deleted";
     }
 
     public ResponseEntity<Object> addUser(CustomDTO customDTO) {

@@ -20,8 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/users-location", produces = { "application/json", "application/xml" })
-    public List<UserLocationDTO> getAllUsersLocation() {
+    @GetMapping(path = "/users-location/{id}", produces = { "application/json", "application/xml" })
+    public List<UserLocationDTO> getAllUsersLocation(@PathVariable String id) {
         return userService.getAllUsersLocation();
     }
 
@@ -31,7 +31,13 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/user/{id}", produces = { "application/json", "application/xml" })
-    public ResponseEntity<Object> deleteUser(@PathVariable String id) {
+    public String deleteUser(@PathVariable String id) {
+        if (id == null) {
+            return "User id can't be null";
+        }
+        if (id.isEmpty()) {
+            return "User id is empty";
+        }
         return userService.deleteUser(id);
     }
 
